@@ -36,12 +36,10 @@ export default function FamilyDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Modal states and form submission states for members
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [memberAddLoading, setMemberAddLoading] = useState(false);
   const [memberAddError, setMemberAddError] = useState<string | null>(null);
 
-  // Modal states and form submission states for certificates
   const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
   const [certificateAddLoading, setCertificateAddLoading] = useState(false);
   const [certificateAddError, setCertificateAddError] = useState<string | null>(null);
@@ -72,7 +70,6 @@ export default function FamilyDetailsPage() {
     }
   }, [familyId]);
 
-  // Add new family member
   const handleAddMember = async (newMember: { Name: string; DateOfBirth: string }) => {
     setMemberAddLoading(true);
     setMemberAddError(null);
@@ -85,7 +82,6 @@ export default function FamilyDetailsPage() {
       });
       if (!res.ok) throw new Error(`Failed to add member: ${res.status} ${res.statusText}`);
 
-      // Refresh family data
       const fetchRes = await fetch(`https://localhost:7063/api/Family/${id}`, {
         headers: { Accept: "application/json" },
       });
@@ -100,7 +96,6 @@ export default function FamilyDetailsPage() {
     }
   };
 
-  // Add new certificate
   const handleAddCertificate = async (newCert: { Title: string; IssueDate: string; ExpiryDate: string }) => {
     setCertificateAddLoading(true);
     setCertificateAddError(null);
@@ -113,7 +108,6 @@ export default function FamilyDetailsPage() {
       });
       if (!res.ok) throw new Error(`Failed to add certificate: ${res.status} ${res.statusText}`);
 
-      // Refresh family data
       const fetchRes = await fetch(`https://localhost:7063/api/Family/${id}`, {
         headers: { Accept: "application/json" },
       });
@@ -137,14 +131,12 @@ export default function FamilyDetailsPage() {
       <div className="bg-white m-6 p-6 border rounded-lg shadow-lg">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Familie Details</h1>
 
-        {/* Family info */}
         <div className="space-y-3">
           <p><span className="font-medium">ID:</span> {family.Id}</p>
           <p><span className="font-medium">Familienaam:</span> {family.Name}</p>
           <p><span className="font-medium">Adres:</span> {family.Address}</p>
           <p><span className="font-medium">Aantal Leden:</span> {family.Members.length}</p>
 
-          {/* Members list */}
           <div>
             <span className="font-medium">Leden:</span>
             {family.Members.length > 0 ? (
@@ -168,7 +160,6 @@ export default function FamilyDetailsPage() {
             )}
           </div>
 
-          {/* Certificates list */}
           <div>
             <span className="font-medium">Attesten:</span>
             {family.Certificates.length > 0 ? (
@@ -195,7 +186,6 @@ export default function FamilyDetailsPage() {
 
         </div>
 
-        {/* Buttons */}
         <div className="mt-6 space-x-4">
           <button
             onClick={() => setIsMemberModalOpen(true)}
@@ -219,7 +209,6 @@ export default function FamilyDetailsPage() {
           </button>
         </div>
 
-        {/* Modals */}
         {isMemberModalOpen && (
           <AddFamilyMemberModal
             onAdd={handleAddMember}

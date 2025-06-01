@@ -60,7 +60,6 @@ export default function CertificateDetailsPage() {
       if (!res.ok) {
         throw new Error(`Failed to delete certificate: ${res.status} ${res.statusText}`);
       }
-      // Na succesvol verwijderen terug naar familiepagina:
       router.push(`/familys/details/${familyId}`);
     } catch (err: any) {
       setDeleteError(err.message);
